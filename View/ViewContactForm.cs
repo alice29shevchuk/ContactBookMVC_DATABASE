@@ -77,6 +77,7 @@ namespace ContactBookMVC.View
                 using (SqlConnection conn = new SqlConnection(connStr))
                 {
                     conn.Open();
+
                     //MessageBox.Show(tempContact.Name+"|"+ this.idDell);
                     using (SqlCommand command = new SqlCommand($"UPDATE [Contacts] SET [Name] = \'{tempContact.Name}\',[Surname] = \'{tempContact.Surname}\',[Address] = \'{tempContact.Address}\',[PhoneNumber] = \'{tempContact.Number}\' WHERE Id = {this.idDell}", conn))
                     {
