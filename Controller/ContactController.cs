@@ -11,6 +11,7 @@ namespace ContactBookMVC.Controller
     public class ContactController
     {
         private List<Contact> contactsList { get; set; }
+        Singleton singleton = Singleton.GetInstance();
         public ContactController(List<Contact> contactsList)
         {
             this.contactsList = contactsList;
@@ -18,8 +19,8 @@ namespace ContactBookMVC.Controller
         public ContactController()
         {
             this.contactsList = new List<Contact>();
-            string connStr  = @"Server=localhost\SQLEXPRESS01;Database=ContactBook;Trusted_Connection=True;";
-            using (SqlConnection conn = new SqlConnection(connStr) )
+            //string connStr  = @"Server=localhost\SQLEXPRESS01;Database=ContactBook;Trusted_Connection=True;";
+            using (SqlConnection conn = singleton.GetSqlConnection)
             {
                 conn.Open();
                 string commStr = "SELECT * FROM [Contacts];";

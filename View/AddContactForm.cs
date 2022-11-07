@@ -17,6 +17,7 @@ namespace ContactBookMVC.View
     {
         public Contact contact { get; set; }
         public List<Contact> contacts;
+        Singleton singleton = Singleton.GetInstance();
         public AddContactForm(List<Contact> _contacts)
         {
             InitializeComponent();
@@ -26,8 +27,8 @@ namespace ContactBookMVC.View
         private void button1_Click(object sender, EventArgs e)
         {
             contact = new Contact(this.nameTB.Text, this.surnameTB.Text, this.addressTB.Text, this.numberTB.Text);
-            string connStr = @"Server=localhost\SQLEXPRESS01;Database=ContactBook;Trusted_Connection=True;";
-            using (SqlConnection conn = new SqlConnection(connStr))
+            //string connStr = @"Server=localhost\SQLEXPRESS01;Database=ContactBook;Trusted_Connection=True;";
+            using (SqlConnection conn = singleton.GetSqlConnection)
             {
                 conn.Open();
 

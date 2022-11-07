@@ -1,4 +1,5 @@
-﻿using ContactBookMVC.View;
+﻿using ContactBookMVC.Controller;
+using ContactBookMVC.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace ContactBookMVC
         [STAThread]
         static void Main()
         {
+            //Singleton singleton = Singleton.GetInstance;
+            //MessageBox.Show(singleton.GetSqlConnection);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());

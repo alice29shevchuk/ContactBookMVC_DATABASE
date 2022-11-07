@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using ContactBookMVC.Controller;
 
 namespace ContactBookMVC.View
 {
@@ -20,7 +21,7 @@ namespace ContactBookMVC.View
         public DropEvent dropEvent;
         public int idDell;
         public Contact oldContact;
-
+        Singleton singleton;
         public ViewContactForm(Contact _contact,int id,string name,string surname,string address,string numb)
         {
             InitializeComponent();
@@ -30,6 +31,9 @@ namespace ContactBookMVC.View
             this.userControl.SetNumber(numb);
             this.contact = new Contact(name, surname, address, numb);
             this.oldContact = _contact;
+            /////////
+            this.singleton = Singleton.GetInstance();
+            MessageBox.Show(singleton.ToString());
         }
 
         private void exitBtn_Click(object sender, EventArgs e)
@@ -47,8 +51,9 @@ namespace ContactBookMVC.View
             if (res == DialogResult.Yes)
             {
                 dropEvent?.Invoke(contact);
-                string connStr = @"Server=localhost\SQLEXPRESS01;Database=ContactBook;Trusted_Connection=True;";
-                using (SqlConnection conn = new SqlConnection(connStr))
+                //string connStr = @"Server=localhost\SQLEXPRESS01;Database=ContactBook;Trusted_Connection=True;";
+
+                using (SqlConnection conn = singleton.GetSqlConnection)
                 {
                     conn.Open();
                     using (SqlCommand command = new SqlCommand($"DELETE [Contacts] WHERE Id = {this.idDell}", conn))
@@ -73,9 +78,10 @@ namespace ContactBookMVC.View
                 this.userControl.SetAddress(tempContact.Address);
                 this.userControl.SetNumber(tempContact.Number);
                 this.oldContact = tempContact;
-                string connStr = @"Server=localhost\SQLEXPRESS01;Database=ContactBook;Trusted_Connection=True;";
-                using (SqlConnection conn = new SqlConnection(connStr))
+                //string connStr = @"Server=localhost\SQLEXPRESS01;Database=ContactBook;Trusted_Connection=True;";
+                using (SqlConnection conn = singleton.GetSqlConnection)
                 {
+                    MessageBox.Show(conn.ConnectionString);
                     conn.Open();
 
                     //MessageBox.Show(tempContact.Name+"|"+ this.idDell);
